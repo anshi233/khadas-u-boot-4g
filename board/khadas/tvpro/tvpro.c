@@ -185,6 +185,13 @@ void board_init_mem(void) {
 	#endif
 }
 
+static void set_update_key_pull_up(void)
+{
+	uint32_t val = readl(PADCTRL_GPIOD_PULL_UP);
+	val |= (1u << 4u);
+	writel(val, PADCTRL_GPIOD_PULL_UP);
+}
+
 int board_init(void)
 {
 	printf("board init\n");
@@ -204,6 +211,8 @@ int board_init(void)
 	active_clk();
 #endif
 	pinctrl_devices_active(PIN_CONTROLLER_NUM);
+
+	set_update_key_pull_up();
 
 	/*
 	 * Turn on USB host power supply,
