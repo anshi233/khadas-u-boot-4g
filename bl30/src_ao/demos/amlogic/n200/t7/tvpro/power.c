@@ -265,18 +265,5 @@ void str_power_off(int shutdown_flag)
 		printf("vdd_EE pwm set fail\n");
 		return;
 	}
-
-	if (1 == shutdown_flag) {
-		uint8_t val = 1;
-
-		printf("mcu off\n");
-		mcu_i2c_init();
-		// Poweroff MCU
-		ret = xI2cMesonWrite(0x18, 0x80, &val, 1);
-		if (ret < 0) {
-			printf("power off mcu fail\n");
-			return;
-		}
-	}
 }
 

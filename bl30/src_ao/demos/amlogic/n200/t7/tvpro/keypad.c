@@ -47,9 +47,6 @@ static void vAdcKeyCallBack(struct xReportEvent event)
 struct xGpioKeyInfo gpioKeyInfo[] = {
 	GPIO_KEY_INFO(GPIO_KEY_ID_POWER, HIGH, EVENT_SHORT,
 			vGpioKeyCallBack, NULL),
-	GPIO_KEY_INFO(WOL_GPIO, HIGH, EVENT_SHORT,
-			vGpioKeyCallBack, NULL)
-
 };
 
 struct xAdcKeyInfo adcKeyInfo[] = {

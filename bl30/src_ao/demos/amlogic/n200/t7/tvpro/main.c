@@ -173,7 +173,7 @@ int main(void)
 	vMbInit();
 
 	// Initialize SYS_LED
-	xLedsStateInit();
+	// xLedsStateInit();
 
 	// Create timer
 	xSoftTimer = xTimerCreate("Timer", pdMS_TO_TICKS(100), pdTRUE, NULL, vPrintSystemStatus);
