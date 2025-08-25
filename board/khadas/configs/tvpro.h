@@ -361,19 +361,6 @@
                 "bmp scale;"\
             "fi;"\
 			"\0"\
-        "wol_init="\
-            "kbi powerstate;"\
-            "kbi trigger wol r;"\
-            "if test ${wol_enable} = 1; then "\
-                "kbi trigger wol w 1;"\
-            "fi;"\
-            "setenv bootargs ${bootargs} wol_enable=${wol_enable};"\
-            "if test ${power_state} = 1; then "\
-                "kbi poweroff;"\
-            "else "\
-                "kbi wolreset;"\
-            "fi;"\
-            "\0"\
         "init_display="\
 			"run init_display_hdmitx;"\
 			"\0"\
@@ -411,7 +398,6 @@
                     "setenv bootargs ${bootargs} androidboot.deviceid=${deviceid};"\
                 "fi;"\
             "fi;"\
-            "kbi usid noprint;"\
             "if printenv usid; then "\
                 "setenv bootargs ${bootargs} androidboot.serialno=${usid};"\
                 "setenv serial ${usid}; setenv serial# ${usid};"\
@@ -419,7 +405,6 @@
                 "setenv bootargs ${bootargs} androidboot.serialno=an400${cpu_id};"\
                 "setenv serial kvim4${cpu_id}; setenv serial# kvim4${cpu_id};"\
             "fi;"\
-            "kbi ethmac noprint;"\
             "setenv bootargs ${bootargs} mac=${eth_mac} ;"\
             "\0"\
         "upgrade_key="\
@@ -441,7 +426,6 @@
             "run upgrade_check;"\
             "run check_display;"\
             "run storeargs;"\
-            "run wol_init;"\
             "run reset_suspend;"\
             "run upgrade_key;"\
             "run switch_bootmode;"
