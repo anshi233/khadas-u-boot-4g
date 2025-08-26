@@ -147,18 +147,39 @@ void board_lcd_detect(void)
 
 static void select_fdtfile(void)
 {
-	cpu_id_t cpu_id;
+	cpu_id_t cpu_id = get_cpu_id();
+	phys_size_t ddr_size = (((readl(SYSCTRL_SEC_STATUS_REG4)) & ~0xffffUL) << 4);
 
-	cpu_id = get_cpu_id();
-
-	if (cpu_id.chip_rev == 0xA || cpu_id.chip_rev == 0xb) {
-		env_set("chip_recv", "b");
-		env_set("fdtfile", "amlogic/" CONFIG_DEFAULT_DEVICE_TREE".dtb");
-		printf("A311D2 Revision: B. Family: T7\n");
-	} else if (cpu_id.chip_rev == 0xC) {
-		env_set("chip_recv", "c");
-		env_set("fdtfile", "amlogic/" CONFIG_DEFAULT_DEVICE_TREE"n.dtb");
-		printf("A311D2 Revision: C. Family: T7C\n");
+	switch (ddr_size) {
+	case 0x100000000:
+		if (cpu_id.chip_rev == 0x0a || cpu_id.chip_rev == 0x0b) {
+			env_set("chip_recv", "b");
+			env_set("fdtfile", "amlogic/t7-" CONFIG_DEFAULT_DEVICE_TREE "-4g.dtb");
+		} else if (cpu_id.chip_rev == 0x0c) {
+			env_set("chip_recv", "c");
+			env_set("fdtfile", "amlogic/t7c-" CONFIG_DEFAULT_DEVICE_TREE "-4g.dtb");
+		}
+		break;
+	
+	case 0x200000000:
+		if (cpu_id.chip_rev == 0x0a || cpu_id.chip_rev == 0x0b) {
+			env_set("chip_recv", "b");
+			env_set("fdtfile", "amlogic/t7-" CONFIG_DEFAULT_DEVICE_TREE "-8g.dtb");
+		} else if (cpu_id.chip_rev == 0x0c) {
+			env_set("chip_recv", "c");
+			env_set("fdtfile", "amlogic/t7c-" CONFIG_DEFAULT_DEVICE_TREE "-8g.dtb");
+		}
+		break;
+	
+	default:
+		if (cpu_id.chip_rev == 0x0a || cpu_id.chip_rev == 0x0b) {
+			env_set("chip_recv", "b");
+			env_set("fdtfile", "amlogic/t7-" CONFIG_DEFAULT_DEVICE_TREE "-unsupported.dtb");
+		} else if (cpu_id.chip_rev == 0x0c) {
+			env_set("chip_recv", "c");
+			env_set("fdtfile", "amlogic/t7c-" CONFIG_DEFAULT_DEVICE_TREE "-unsupported.dtb");
+		}
+		break;
 	}
 }
 
