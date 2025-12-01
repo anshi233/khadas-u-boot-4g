@@ -56,7 +56,7 @@
 
 //#define DDR_SIZE_TYPE_1         AN_408_DDR0_4G_DDR1_4G_RANK01
 //For 2G + 2G = 4G device
-#define DDR_SIZE_TYPE_1         AN_408_DDR0_2G_DDR1_2G_RANK01
+#define DDR_SIZE_TYPE_1         AN_408_DDR0_2G_DDR1_2G
 
 ddr_set_t __ddr_setting[] __attribute__ ((section(".ddr_param"))) = {
 #if 0

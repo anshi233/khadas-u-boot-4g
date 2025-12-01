@@ -230,6 +230,15 @@ int board_init(void)
 #if 0 //bypass below operations for pxp
 	active_clk();
 #endif
+	
+	/*
+	 * eMMC reset GPIO must be configured BEFORE pinctrl activation
+	 * to ensure it's available when the MMC driver probes
+	 * GPIOB_9: ACTIVE_HIGH means HIGH = deassert reset (normal operation)
+	 */
+	run_command("gpio set GPIOB_9", 0);
+	mdelay(20); /* Allow eMMC to stabilize after reset deassert */
+	
 	pinctrl_devices_active(PIN_CONTROLLER_NUM);
 
 	set_update_key_pull_up();
