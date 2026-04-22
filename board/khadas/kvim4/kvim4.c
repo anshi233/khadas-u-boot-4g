@@ -156,11 +156,11 @@ static void select_fdtfile(void)
 
 	if (cpu_id.chip_rev == 0xA || cpu_id.chip_rev == 0xb) {
 		env_set("chip_recv", "b");
-		env_set("fdtfile", "amlogic/" CONFIG_DEFAULT_DEVICE_TREE".dtb");
+		env_set("fdtfile", "amlogic/t7_" CONFIG_DEFAULT_DEVICE_TREE".dtb");
 
 	} else if (cpu_id.chip_rev == 0xC) {
 		env_set("chip_recv", "c");
-		env_set("fdtfile", "amlogic/" CONFIG_DEFAULT_DEVICE_TREE"n.dtb");
+		env_set("fdtfile", "amlogic/t7c_" CONFIG_DEFAULT_DEVICE_TREE"n.dtb");
 	}
 }
 
