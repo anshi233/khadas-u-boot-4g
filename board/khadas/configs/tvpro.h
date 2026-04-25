@@ -184,7 +184,7 @@
         "sdcburncfg=aml_sdc_burn.ini\0"\
         "EnableSelinux=permissive\0" \
         "lock=10101000\0"\
-        "board=kvim4\0"\
+        "board=tvpro\0"\
         "osd_reverse=0\0"\
         "video_reverse=0\0"\
         "edid_14_dir=/odm/etc/tvconfig/hdmi/port1_14.bin\0" \
@@ -199,7 +199,7 @@
             "rootflags=data=writeback rw rootfstype=ext4" CONFIG_KNL_LOG_LEVEL "no_console_suspend earlycon=aml-uart,0xfe078000 fsck.repair=yes net.ifnames=0 "\
             "ramoops.pstore_en=1 ramoops.record_size=0x8000 ramoops.console_size=0x4000 loop.max_part=4 "\
 			"scsi_mod.scan=async xhci_hcd.quirks=0x800000 scramble_reg=0xfe02e030 gamma=0 "\
-            "khadas_board=VIM4 boot_source=${boot_source} "\
+            "khadas_board=TVPRO boot_source=${boot_source} "\
             "\0"\
         "upgrade_check="\
 			"run upgrade_check_base;"\
@@ -283,7 +283,7 @@
                 "setenv serial ${usid}; setenv serial# ${usid};"\
             "else "\
                 "setenv bootargs ${bootargs} androidboot.serialno=an400${cpu_id};"\
-                "setenv serial kvim4${cpu_id}; setenv serial# kvim4${cpu_id};"\
+                "setenv serial tvpro${cpu_id}; setenv serial# tvpro${cpu_id};"\
             "fi;"\
             "setenv bootargs ${bootargs} mac=${eth_mac} ;"\
             "\0"\
