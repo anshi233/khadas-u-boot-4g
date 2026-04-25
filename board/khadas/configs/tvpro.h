@@ -34,7 +34,6 @@
 
 /* Serial config */
 #define CONFIG_CONS_INDEX 2
-#define CONFIG_BAUDRATE  115200
 
 /* AVB */
 #define CONFIG_AML_AVB2_ANTIROLLBACK 1
