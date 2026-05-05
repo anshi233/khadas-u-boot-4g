@@ -1026,6 +1026,19 @@ static int label_boot(cmd_tbl_t *cmdtp, struct pxe_label *label)
 				free(fdtfilefree);
 				goto cleanup;
 			}
+#ifdef CONFIG_MULTI_DTB
+			{
+				char *fdt_addr_r = env_get("fdt_addr_r");
+				unsigned long fdt_addr;
+
+				if (fdt_addr_r && !strict_strtoul(fdt_addr_r, 16, &fdt_addr)) {
+					extern unsigned long get_multi_dt_entry(unsigned long fdt_addr);
+
+					/* Vendor extlinux edits the FDT before bootm unwraps multi-DTBs. */
+					get_multi_dt_entry(fdt_addr);
+				}
+			}
+#endif
 #ifdef CONFIG_OF_LIBFDT_OVERLAY
 		    if (label->fdtoverlays)
 			label_boot_fdtoverlay(cmdtp, label);
@@ -1036,14 +1049,14 @@ static int label_boot(cmd_tbl_t *cmdtp, struct pxe_label *label)
 			if(mipi_lcd_exist_value != NULL){
 				if(!strcmp(mipi_lcd_exist_value, "0")) {
 					printf("MIPI LCD not exist, disable lcd and touch panel nodes.\n");
-					run_command("fdt addr ${fdt_addr_r}; fdt resize 65536; fdt set /lcd status disabled;fdt set /lcd1 status disabled;fdt set /lcd2 status disabled; fdt set /soc/apb4@fe000000/i2c@6c000/gt9xx@14 status disabled; fdt set /soc/apb4@fe000000/i2c@6c000/ft5336@38 status disabled", 0);
+					run_command("fdt addr ${fdt_addr_r}; fdt resize 10000; fdt set /lcd status disabled;fdt set /lcd1 status disabled;fdt set /lcd2 status disabled; fdt set /soc/apb4@fe000000/i2c@6c000/gt9xx@14 status disabled; fdt set /soc/apb4@fe000000/i2c@6c000/ft5336@38 status disabled", 0);
 				} else if (!strcmp(mipi_lcd_exist_value, "1")) {
 					if (!strcmp(env_get("panel_type"), "mipi_1")) {
 						// Set fbdev size to TS101 MIPI LCD resolution 1200x1920
-						run_command("fdt addr ${fdt_addr_r}; fdt resize 65536; fdt set /drm-subsystem fbdev_sizes <1920 1200 1920 2400 32>;", 0);
+						run_command("fdt addr ${fdt_addr_r}; fdt resize 10000; fdt set /drm-subsystem fbdev_sizes <1920 1200 1920 2400 32>;", 0);
 					}else {
 						// Set fbdev size to TS050 MIPI LCD resolution 1080x1920
-						run_command("fdt addr ${fdt_addr_r}; fdt resize 65536; fdt set /drm-subsystem fbdev_sizes <1080 1920 1080 3840 32>;", 0);
+						run_command("fdt addr ${fdt_addr_r}; fdt resize 10000; fdt set /drm-subsystem fbdev_sizes <1080 1920 1080 3840 32>;", 0);
 					}
 				}
 			}

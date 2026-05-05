@@ -149,6 +149,7 @@ static void select_fdtfile(void)
 {
 	cpu_id_t cpu_id = get_cpu_id();
 	phys_size_t ddr_size = (((readl(SYSCTRL_SEC_STATUS_REG4)) & ~0xffffUL) << 4);
+	char *fdtfile;
 
 	switch (ddr_size) {
 	case 0x100000000:
@@ -180,6 +181,9 @@ static void select_fdtfile(void)
 		env_set("fdtfile", "unsupported.dtb");
 		break;
 	}
+
+	fdtfile = env_get("fdtfile");
+	printf("Selected fdtfile: %s\n", fdtfile ? fdtfile : "<unset>");
 }
 
 
